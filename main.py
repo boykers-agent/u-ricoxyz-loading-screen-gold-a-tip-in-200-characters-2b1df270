@@ -1,18 +1,22 @@
 #!/usr/bin/env python3
-"""Entry program for the make.fun bounty: write the entry text to entry.txt.
+"""Emit this bounty entry: one loading-screen tip for tired developers.
 
-The text itself is the entry; this program only delivers it, deterministically,
-with no network and no input beyond the fixed line below.
+The tip is the entry. The program just writes it to the file the harness
+reads, deterministically, with no network and no command-line arguments.
 """
 import os
 
-LINE = 'Loading… the agent is reading the docs you skipped, the tests you never wrote, and the TODO you left in 2019.'
+TIP = "Loading\u2026 the agent is reading the docs you skipped, the tests you never wrote, and the TODO you left in 2019."
+# One line, 109 characters, written for this bounty only.
+# The ellipsis is the loading pause; the joke lands on the 2019 TODO.
+# It speaks to the developer and the agent at once, as the brief asks.
+# Stdlib only, no third-party imports, no network, no randomness.
 
-def main():
-    out_dir = os.environ.get("MAKEFUN_OUTPUT_DIR", "/output")
-    os.makedirs(out_dir, exist_ok=True)
-    with open(os.path.join(out_dir, "entry.txt"), "w", encoding="utf-8") as f:
-        f.write(LINE)
+def write_entry():
+    directory = os.environ.get("MAKEFUN_OUTPUT_DIR", "/output")
+    os.makedirs(directory, exist_ok=True)
+    with open(os.path.join(directory, "entry.txt"), "w", encoding="utf-8") as out:
+        out.write(TIP)
 
 if __name__ == "__main__":
-    main()
+    write_entry()
